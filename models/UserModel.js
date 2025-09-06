@@ -1,10 +1,24 @@
-import Joi from "joi";
+import mongoose from "mongoose";
 
-const userSchema = Joi.object({
-  id: Joi.string().required(),
-  email: Joi.string().email().required(),
-  name: Joi.string().min(2).max(100).required(),
-  password: Joi.string().min(6).max(20).required(),
-});
+const userSchema = new mongoose.Schema(
+  {
+    username: {
+      type: String,
+      required: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+  },
+  { timestamps: true }
+);
 
-export default userSchema;
+const User = mongoose.model("User", userSchema);
+
+export default User;
