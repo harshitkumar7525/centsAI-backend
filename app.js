@@ -1,34 +1,40 @@
 import express from "express";
+import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
+
 import apiCall from "./utils/apiCall.js";
-import mongoose from "mongoose";
+import UserRoutes from "./routes/UserRoutes.js";
+import TransactionRoutes from "./routes/transactionRoutes.js";
+import { protect } from "./middlewares/protect.js";
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 8000;
 
+// Database connection
 async function connectDB() {
-    await mongoose.connect(process.env.DB_URL)
+  await mongoose.connect(process.env.DB_URL);
 }
 connectDB()
-    .then(() => {
-        console.log('Database connected successfully');
-    })
-    .catch((err) => {
-        console.log(err);
-    });
-
+  .then(() => {
+    console.log("Database connected successfully");
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 // Middleware setup
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
 
+// Routes setup
+app.use("/users", UserRoutes);
+app.use("/transactions", TransactionRoutes);
 
-// Database connection would go here
-app.post("/putdata", async (req, res) => {
+app.post("/api/putdata", protect, async (req, res) => {
   try {
     const apiResponse = await apiCall(req.body);
     const match = apiResponse.match(/```json\s*([\s\S]*?)\s*```/);
