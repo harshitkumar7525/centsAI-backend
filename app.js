@@ -35,32 +35,51 @@ app.use(cors());
 app.use("/users", UserRoutes);
 app.use("/transactions", TransactionRoutes);
 
-app.get("/dashboard", protect, (req, res) => {
-  const user = req.user;
-  console.dir(user.id);
-  res.status(200).json({ message: "Welcome to the dashboard!" });
+app.get("/dashboard", protect, async (req, res, next) => {
+  try {
+    const txns = await Transaction.find({ userId: req.user.id });
+    res.status(200).json({ transactions: txns });
+  } catch (err) {
+    next(err);
+  }
 });
 
-app.post("/api/putdata", protect, async (req, res) => {
+app.post("/api/putdata", protect, async (req, res, next) => {
   try {
     const apiResponse = await apiCall(req.body);
     const match = apiResponse.match(/```json\s*([\s\S]*?)\s*```/);
     const jsonString = match ? match[1] : apiResponse;
     const parsedData = JSON.parse(jsonString);
-    for(let item of parsedData){
+
+    for (let item of parsedData) {
       let t = new Transaction({
         userId: req.user.id,
         amount: item.amount,
         date: new Date(item.transactionDate),
-        category: item.category
+        category: item.category,
       });
       await t.save();
     }
+
     res.status(200).json(parsedData);
   } catch (error) {
-    console.error("An error occurred:", error.message);
-    res.status(500).json({ error: "Failed to process the request." });
+    next(error);
   }
+});
+
+// Catch-all route for unknown paths
+app.use((req, res) => {
+  res.status(404).json({
+    message: "Route not found",
+  });
+});
+
+// Error handler
+app.use((err, req, res, next) => {
+  console.error("Error:", err.message);
+  res.status(500).json({
+    error: err.message || "Internal Server Error",
+  });
 });
 
 app.listen(PORT, () => {
