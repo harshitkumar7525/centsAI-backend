@@ -1,16 +1,17 @@
 {
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "name": "centsai-backend",
   "version": "1.0.0",
   "main": "app.js",
+  "type": "module",
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
-  "type": "module",
+  "author": "Harshit Kumar",
+  "url": "https://github.com/harshitkumar7525/centsAI-backend",
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
     "bcryptjs": "^3.0.2",
@@ -19,7 +20,9 @@
     "express": "^5.1.0",
     "express-async-handler": "^1.2.0",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.18.0",
-    "passport": "^0.7.0"
+    "mongoose": "^8.18.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
   }
 }
