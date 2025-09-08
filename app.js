@@ -32,7 +32,12 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: ["https://cents-ai.vercel.app", "http://localhost:5173"],
+    origin: [
+      "https://cents-ai.vercel.app",
+      "https://cents-ai-git-main-harshit-kumars-projects-8252be3d.vercel.app",
+      "https://cents-pyxnhytho-harshit-kumars-projects-8252be3d.vercel.app",
+      "https://cents-ai-harshit-kumars-projects-8252be3d.vercel.app"
+    ],
     methods: ["GET", "POST", "PUT", "DELETE"],
   })
 );
@@ -47,7 +52,7 @@ app.use("/transactions", TransactionRoutes);
 app.get("/dashboard", protect, async (req, res, next) => {
   try {
     const txns = await Transaction.find({ userId: req.user.id });
-    res.status(200).json({ transactions: txns });
+    res.status(200).json( txns );
   } catch (err) {
     next(err);
   }
@@ -67,6 +72,8 @@ app.post("/api/putdata", protect, async (req, res, next) => {
         transactionDate: new Date(item.transactionDate),
         category: item.category,
       });
+      t.amount = parseFloat(t.amount.toFixed(2));
+      if(t.amount === 0) continue; 
       await t.save();
     }
 

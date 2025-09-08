@@ -36,6 +36,7 @@ async function apiCall({ prompt }) {
     7. Each object in the array must have "amount", "transactionDate", and "category" fields.
     8. The category must be one from the available categories above. If unsure, use "others".
     9. The JSON array should have at least one object. If no expenses are found, return an object with amount as 0, current date, and category as "others".
+    10. If any other currency is mentioned, convert it to INR STRICTLY USING THE LAST KNOWN EXCHANGE RATE.
 
     ## Examples
     User Prompt: "I bought a pizza for 500"
