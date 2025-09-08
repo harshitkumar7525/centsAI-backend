@@ -32,7 +32,7 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: "https://cents-ai.vercel.app",
+    origin: ["https://cents-ai.vercel.app", "http://localhost:5173"],
     methods: ["GET", "POST", "PUT", "DELETE"],
   })
 );
