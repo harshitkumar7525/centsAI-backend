@@ -1,20 +1,16 @@
 import express from "express";
+import protect from "../middlewares/protect.js";
+import {
+  deleteTransaction,
+  updateTransaction,
+  addTransaction,
+} from "../controllers/TransactionController.js";
 
 const router = express.Router();
 
-router.post("/:userId", (req, res) => {
-    // Handle creating a new transaction for a user
-    res.send("Create transaction");
-});
-
-router.get("/:userId", (req, res) => {
-    // Handle fetching all transactions for a user
-    res.send("Get transactions");
-});
-
-router.delete("/:userId/:transactionId", (req, res) => {
-    // Handle deleting a specific transaction for a user
-    res.send("Delete transaction");
-});
+router
+  .delete("/:transactionId", protect, deleteTransaction)
+  .put("/:transactionId", protect, updateTransaction)
+  .post("/", protect, addTransaction);
 
 export default router;

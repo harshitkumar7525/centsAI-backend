@@ -29,7 +29,13 @@ connectDB()
 // Middleware setup
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(cors());
+
+app.use(
+  cors({
+    origin: "https://cents-ai.vercel.app",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+  })
+);
 
 // Routes setup
 app.use("/users", UserRoutes);
