@@ -32,15 +32,23 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: [
-      "https://cents-ai.vercel.app",
-      "https://cents-ai-git-main-harshit-kumars-projects-8252be3d.vercel.app",
-      "https://cents-pyxnhytho-harshit-kumars-projects-8252be3d.vercel.app",
-      "https://cents-ai-harshit-kumars-projects-8252be3d.vercel.app"
-    ],
+    origin: (origin, callback) => {
+      const allowedOrigins = [
+        "https://cents-ai.vercel.app",
+        /\.vercel\.app$/, // allow all vercel preview deployments
+      ];
+
+      if (!origin || allowedOrigins.some((o) => o instanceof RegExp ? o.test(origin) : o === origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
   })
 );
+
 
 // Routes setup
 app.get("/", (req, res) => {
