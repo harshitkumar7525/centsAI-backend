@@ -34,8 +34,8 @@ app.use(
   cors({
     origin: (origin, callback) => {
       const allowedOrigins = [
-        "https://cents-ai.vercel.app",
-        /\.vercel\.app$/, // allow all vercel preview deployments
+        "https://cents-ai-frontend.vercel.app",
+        /\.vercel\.app$/,
       ];
 
       if (!origin || allowedOrigins.some((o) => o instanceof RegExp ? o.test(origin) : o === origin)) {
