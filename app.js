@@ -64,7 +64,7 @@ app.post("/api/putdata", protect, async (req, res, next) => {
       let t = new Transaction({
         userId: req.user.id,
         amount: item.amount,
-        date: new Date(item.transactionDate),
+        transactionDate: new Date(item.transactionDate),
         category: item.category,
       });
       await t.save();

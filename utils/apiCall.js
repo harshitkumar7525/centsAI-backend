@@ -32,6 +32,10 @@ async function apiCall({ prompt }) {
     3. The amount must be a number. If no amount is found, use 0.
     4. The output must be ONLY a valid JSON array of objects.
     5. The amount should be in indian rupees (INR).
+    6. Date format should be in such a way that it can be passed to new Date() in JS.
+    7. Each object in the array must have "amount", "transactionDate", and "category" fields.
+    8. The category must be one from the available categories above. If unsure, use "others".
+    9. The JSON array should have at least one object. If no expenses are found, return an object with amount as 0, current date, and category as "others".
 
     ## Examples
     User Prompt: "I bought a pizza for 500"
