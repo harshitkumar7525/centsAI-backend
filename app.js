@@ -38,6 +38,9 @@ app.use(
 );
 
 // Routes setup
+app.get("/", (req, res) => {
+  res.send("Welcome to the CentsAI API");
+});
 app.use("/users", UserRoutes);
 app.use("/transactions", TransactionRoutes);
 

@@ -1,5 +1,5 @@
 import express from "express";
-import protect from "../middlewares/protect.js";
+import { protect } from "../middlewares/protect.js";
 import {
   deleteTransaction,
   updateTransaction,
