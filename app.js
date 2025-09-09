@@ -34,7 +34,7 @@ app.use(
   cors({
     origin: (origin, callback) => {
       const allowedOrigins = [
-        "https://cents-ai-frontend.vercel.app",
+        "https://cents-ai.vercel.app/",
         /\.vercel\.app$/,
       ];
 
